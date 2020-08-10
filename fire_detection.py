@@ -40,7 +40,7 @@ class FireDetection:
             output.append((pred[0][0], label))
         else:
             label = 'No-Fire'
-            output.append((pred[0][1]),label)
+            output.append((pred[0][1],label))
 
         return output, img
 
