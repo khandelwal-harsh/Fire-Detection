@@ -22,18 +22,20 @@ count_frames = 0
 while cap.isOpened():
 
 	ret,frame = cap.read()
-	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
 
 	if ret == False:
 		break
+	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
 	output,img = fire.predict(frame,0.8)
 	for out in output:
 		confidence,label = out
 	if label == 'Fire':
-	    cv2.putText(frame,label,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0), 1)
+		cv2.putText(frame,label,(50,55),cv2.FONT_HERSHEY_SIMPLEX,3,(255,0,0), 2)
 	else:
-		cv2.putText(frame,label,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0), 1)
+		cv2.putText(frame,label,(50,55),cv2.FONT_HERSHEY_SIMPLEX,3,(0,255,0), 2)
+
 
 
 	frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
