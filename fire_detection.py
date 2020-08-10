@@ -8,7 +8,7 @@ import cv2
 class FireDetection:
     def __init__(self):
         print("[INFO] Initialized the Fire Detection Model")
-        self.model = load_model('path to fire detection model(firenet_v2.hdf5)')
+        self.model = load_model('C:/Users/Harsh/Desktop/ai_smart_cameras/openvino/quantcam/modules/fire_detection/Fire_model_weights/firenet_v2.hdf5')
 
     def predict(self, img, min_score):
         """
@@ -25,6 +25,7 @@ class FireDetection:
             img = Image.open(img)
             img = np.array(img)
 
+
         x = cv2.resize(img, (width, height))
 
         x = x.astype("float") / 255.0
@@ -35,8 +36,11 @@ class FireDetection:
 
         output = []
         if pred[0][0] >= min_score:
-            label = 'fire'
+            label = 'Fire'
             output.append((pred[0][0], label))
+        else:
+            label = 'No-Fire'
+            output.append((pred[0][1]),label)
 
         return output, img
 
