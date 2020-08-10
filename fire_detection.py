@@ -8,7 +8,7 @@ import cv2
 class FireDetection:
     def __init__(self):
         print("[INFO] Initialized the Fire Detection Model")
-        self.model = load_model('modules/fire_detection/model_weights/firenet_v2.hdf5')
+        self.model = load_model('path to fire detection model(firenet_v2.hdf5)')
 
     def predict(self, img, min_score):
         """
