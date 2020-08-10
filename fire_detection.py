@@ -25,8 +25,6 @@ class FireDetection:
             img = Image.open(img)
             img = np.array(img)
 
-        # x = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-        # x = cv2.resize(x, (width, height))
         x = cv2.resize(img, (width, height))
 
         x = x.astype("float") / 255.0
