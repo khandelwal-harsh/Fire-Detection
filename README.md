@@ -4,3 +4,7 @@
 
 1. Run run_fire_detection.py file and provide input video file inside this python file
 
+# Output
+
+out_video.mp4
+
