@@ -1,7 +1,7 @@
 from fire_detection import FireDetection
 from tqdm import tqdm
 import cv2
-import argparse
+# import argparse
 import numpy
 # parser = argparse.ArgumentParser()
 # parser.add_argument("-t", "--input_type", help = "type of input file",default = 'image')
