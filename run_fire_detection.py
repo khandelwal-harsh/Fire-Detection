@@ -37,7 +37,7 @@ def run_fire_detection(input_file,input_type):
 		cv2.imwrite(output_path,frame)
 		return output_path
 
-	elif input_type == 'video'
+	elif input_type == 'video':
 
 		cap = cv2.VideoCapture(input_file)
 
