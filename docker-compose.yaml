@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  face-mask-detection:
+    build: .
+    command: python3 app.py
+    ports:
+      - "5001:5001"
