@@ -1,4 +1,4 @@
-from flask import Flask,jsonify,request,send_file,secure_filename
+from flask import Flask,jsonify,request,send_file
 from run_fire_detection import Fire_Detection
 import cv2
 import numpy
