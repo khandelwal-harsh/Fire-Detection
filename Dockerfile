@@ -2,7 +2,8 @@ from ubuntu:latest
 ARG DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /src
-
+RUN  wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1_79BO0PhIW_6-RX41nOzxR0B8jTKoGEk" -O firenet_v2.hdf5 -r -A 'uc*' -e robots=off -nd
+RUN ls -lh
 COPY . /src
 
 RUN apt-get update \
@@ -21,8 +22,8 @@ RUN pip3 install flask opencv-python
 RUN pip3 install --upgrade tensorflow
 RUN pip3 install pillow
 RUN pip3 install tqdm
-RUN  wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1_79BO0PhIW_6-RX41nOzxR0B8jTKoGEk" -O firenet_v2.hdf5 -r -A 'uc*' -e robots=off -nd
-COPY firenet_v2.hdf5 /src/
+
+
 
 
 
