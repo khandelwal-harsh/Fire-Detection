@@ -22,6 +22,7 @@ RUN pip3 install --upgrade tensorflow
 RUN pip3 install pillow
 RUN pip3 install tqdm
 RUN  wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1_79BO0PhIW_6-RX41nOzxR0B8jTKoGEk" -O firenet_v2.hdf5 -r -A 'uc*' -e robots=off -nd
+COPY firenet_v2.hdf5 /src/
 
 
 
