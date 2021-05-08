@@ -4,11 +4,14 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from PIL import Image
 import numpy as np
 import cv2
+import os
+
 
 class FireDetection:
     def __init__(self):
         print("[INFO] Initialized the Fire Detection Model")
-        self.model = load_model('firenet_v2.hdf5')
+        print(os.lisdir())
+        self.model = load_model('/src/firenet_v2.hdf5')
 
     def predict(self, img, min_score):
         """
