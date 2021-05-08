@@ -11,7 +11,6 @@ class FireDetection:
     def __init__(self):
         print("[INFO] Initialized the Fire Detection Model")
         print(os.listdir())
-        print(os.listdir('/src'))
         self.model = load_model('firenet_v2.hdf5')
 
     def predict(self, img, min_score):
