@@ -17,7 +17,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 
-RUN sudo apt-get install python3-h5py
+RUN apt-get install python3-h5py
 RUN apt update
 RUN apt-get install -y python3-opencv
 
