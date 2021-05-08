@@ -6,8 +6,9 @@ RUN apt update
 RUN apt-get install wget -y
 RUN  wget --no-check-certificate "https://drive.google.com/uc?export=download&id=1_79BO0PhIW_6-RX41nOzxR0B8jTKoGEk" -O firenet_v2.hdf5 -r -A 'uc*' -e robots=off -nd
 RUN ls -lh
+RUN ls /src -lh
 COPY . /src
-
+RUN ls /src -lh
 RUN apt-get update \
   && apt-get install -y python3-pip python3-dev \
   && cd /usr/local/bin \
