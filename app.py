@@ -1,9 +1,17 @@
-from flask import Flask,jsonify,request,send_file
 from run_fire_detection import Fire_Detection
-import cv2
 import numpy
 import json
-import os
+import base64
+from PIL import Image
+import numpy as np
+import io
+from fastapi import FastAPI
+import uvicorn
+# from starlette.responses import StreamingResponse
+from fastapi.responses import Response
+
+detector_object = Fire_Detection()
+app =  FastAPI()
 
 
 class NumpyEncoder(json.JSONEncoder):
@@ -12,37 +20,20 @@ class NumpyEncoder(json.JSONEncoder):
             return obj.tolist()
         return json.JSONEncoder.default(self, obj)
 
+@app.post("/send_image_input")
+def run_detection(request: dict):
+    im_b64 = request['image']
+    img_bytes = base64.b64decode(im_b64.encode('utf-8'))
+    img = Image.open(io.BytesIO(img_bytes))
+    img_arr = np.asarray(img) 
+    print('[INFO] Running Fire Detection.')
+    image = detector_object.run_fire_detection(img_arr,'image')
+    print('[INFO] Detection Successfully Done.')
+    bytes_image = io.BytesIO()
+    img.save(bytes_image, format='PNG')    
+    # return StreamingResponse(io.BytesIO(image.tobytes()), media_type="image/png")
+    return json.dumps({"output_image":image},cls=NumpyEncoder)
 
-app = Flask(__name__)
-detector_object = Fire_Detection()
-
-@app.route('/send_image_input', methods=['GET','POST'])
-def run_detection():
-
-	file = request.files.get("image","")
-	print('[INFO] Running Face Mask Detection.')
-	file_path = 'input_image.jpg'
-	file.save(file_path)
-	# input_file = cv2.imdecode(numpy.fromstring(file.read(), numpy.uint8), cv2.IMREAD_UNCHANGED)
-	# print(input_image)
-	output_file_path = detector_object.run_fire_detection(input_file,'image')
-	print('[INFO] Detection Successfully Done.')
-	return send_file(output_file_path,mimetype='image/gif')
-	# return json.dumps({"output_image":output_image},cls=NumpyEncoder)
-
-@app.route('/send_video_input', methods=['GET','POST'])
-def run_detection():
-
-	file = request.files.get("video","")
-	print('[INFO] Running Face Mask Detection.')
-	# input_file = cv2.imdecode(numpy.fromstring(file.read(), numpy.uint8), cv2.IMREAD_UNCHANGED)
-	# print(input_image)
-	file_path = 'input_video.mp4'
-	file.save(file_path)
-	output_file_path = detector_object.run_fire_detection(input_file,'video')
-	print('[INFO] Detection Successfully Done.')
-	return send_file(output_file_path)
-	# return json.dumps({"output_image":output_image},cls=NumpyEncoder)
 
 if __name__ == '__main__':
-    app.run(host = "0.0.0.0",port = 5001)
+    uvicorn.run(app = app,host = "0.0.0.0",port = 5000,debug = True)

@@ -1,41 +1,28 @@
 from fire_detection import FireDetection
 from tqdm import tqdm
 import cv2
-# import argparse
 import numpy
-# parser = argparse.ArgumentParser()
-# parser.add_argument("-t", "--input_type", help = "type of input file",default = 'image')
-# parser.add_argument("-i", "--input_file_path", help = "Send Input Video File")
-# args = parser.parse_args()
 
-
-
-class Fire_Detection():
+class Fire_Detection(FireDetection):
 
 	def __init__(self):
-		self.fire_detection_object = FireDetection()
+		super().__init__()
 
 	def run_fire_detection(self,input_file,input_type):
 
 		if input_type == 'image':
-
-			frame  = cv2.imdecode(numpy.fromstring(input_file.read(), numpy.uint8), cv2.IMREAD_UNCHANGED)
+			frame = input_file
 			frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-			output,img = fire.predict(frame,0.8)
+			
+			output,img = super().predict(frame,0.8)
 			for out in output:
 				confidence,label = out
 			if label == 'Fire':
-				cv2.putText(frame,label,(50,55),cv2.FONT_HERSHEY_SIMPLEX,3,(255,0,0), 2)
+				cv2.putText(frame,label,(50,55),cv2.FONT_HERSHEY_SIMPLEX,3,(0,0,255), 2)
 			else:
 				cv2.putText(frame,label,(50,55),cv2.FONT_HERSHEY_SIMPLEX,3,(0,255,0), 2)
-
-
-
-			frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-			output_path = 'output_image.jpg'
-			cv2.imwrite(output_path,frame)
-			return output_path
+			output_path = 'output_image.png'
+			return frame
 
 		elif input_type == 'video':
 
@@ -62,7 +49,7 @@ class Fire_Detection():
 					break
 				frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-				output,img = fire.predict(frame,0.8)
+				output,img = super().predict(frame,0.8)
 				for out in output:
 					confidence,label = out
 				if label == 'Fire':

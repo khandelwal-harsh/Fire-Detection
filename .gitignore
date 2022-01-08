@@ -1,0 +1,25 @@
+ims_v1/
+ims/
+structs/
+tests/
+*test
+*data
+*pycache*
+/data
+__pycache__/config.cpython-37.pyc
+logging/__pycache__/ams_logger.cpython-37.pyc
+predicted_data.csv
+/__pycache__/
+/*json/
+*.zip
+.vscode
+
+# env file
+.env
+
+# logs file
+*.log
+*.pyc
+*.png
+*.jpg
+*.hdf5
