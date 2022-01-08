@@ -7,8 +7,6 @@ import numpy as np
 import io
 from fastapi import FastAPI
 import uvicorn
-# from starlette.responses import StreamingResponse
-from fastapi.responses import Response
 
 detector_object = Fire_Detection()
 app =  FastAPI()
@@ -31,7 +29,6 @@ def run_detection(request: dict):
     print('[INFO] Detection Successfully Done.')
     bytes_image = io.BytesIO()
     img.save(bytes_image, format='PNG')    
-    # return StreamingResponse(io.BytesIO(image.tobytes()), media_type="image/png")
     return json.dumps({"output_image":image},cls=NumpyEncoder)
 
 

@@ -1,10 +1,7 @@
-from fastapi import responses
 import requests
 import base64
 import json
 from PIL import Image
-import os
-import io
 import cv2
 import numpy as np
 
