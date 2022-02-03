@@ -7,10 +7,22 @@ import numpy as np
 import io
 from fastapi import FastAPI
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
+import requests
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 detector_object = Fire_Detection()
 app =  FastAPI()
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins="*",
+    allow_credentials=True,
+    allow_methods=["POST", "GET"],
+		allow_headers=["*"],
+    max_age=3600,
+)
 
 class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -20,16 +32,32 @@ class NumpyEncoder(json.JSONEncoder):
 
 @app.post("/send_image_input")
 def run_detection(request: dict):
-    im_b64 = request['image']
-    img_bytes = base64.b64decode(im_b64.encode('utf-8'))
-    img = Image.open(io.BytesIO(img_bytes))
+    if request["image_type"] == "url":
+        response = requests.get(request["image"])
+        img = Image.open(io.BytesIO(response.content))
+    else:
+        im_b64 = request['image']
+        img_bytes = base64.b64decode(im_b64.encode('utf-8'))
+        img = Image.open(io.BytesIO(img_bytes))
     img_arr = np.asarray(img) 
     print('[INFO] Running Fire Detection.')
     image = detector_object.run_fire_detection(img_arr,'image')
-    print('[INFO] Detection Successfully Done.')
-    bytes_image = io.BytesIO()
-    img.save(bytes_image, format='PNG')    
-    return json.dumps({"output_image":image},cls=NumpyEncoder)
+    cloudinary.config( 
+    cloud_name = "instaimages", 
+    api_key = "539269294439513", 
+    api_secret = "mGHcTrXbNsIcgo9hGWVhIK1knmw",
+    secure = False
+    )    
+    resp = cloudinary.uploader.upload(image,resource_type="image")
+
+    print('[INFO] Detection Successfully Done.',resp)
+  
+    return {
+        "success":True,
+        "data":{
+            "url":resp["url"]
+        }
+    }
 
 
 if __name__ == '__main__':

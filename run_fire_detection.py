@@ -17,12 +17,14 @@ class Fire_Detection(FireDetection):
 			output,img = super().predict(frame,0.8)
 			for out in output:
 				confidence,label = out
+			print(label)
 			if label == 'Fire':
 				cv2.putText(frame,label,(50,55),cv2.FONT_HERSHEY_SIMPLEX,3,(0,0,255), 2)
 			else:
 				cv2.putText(frame,label,(50,55),cv2.FONT_HERSHEY_SIMPLEX,3,(0,255,0), 2)
 			output_path = 'output_image.png'
-			return frame
+			cv2.imwrite(output_path,frame)
+			return output_path
 
 		elif input_type == 'video':
 

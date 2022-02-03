@@ -1,7 +1,6 @@
 import requests
 import base64
 import json
-from PIL import Image
 import cv2
 import numpy as np
 
