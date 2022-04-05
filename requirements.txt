@@ -1,0 +1,7 @@
+fastapi==0.73.0
+uvicorn==0.16.0
+uvloop==0.16.0
+tensorflow==2.7.0
+opencv-python
+numpy
+cloudinary==1.28.1
